@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .nav{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        background-color: black;
+    }
+    .nav a{
+        color: white;
+    }
+    #slideshow {
+        overflow: hidden;
+        height: 75vh;
+        width: 100vw;
+        margin: 0 auto;
+    }
+     .bi{
+        color: white;
+        background-color: gray;
+        text-align: center;
+     }
+    /* Style each of the sides 
+    with a fixed width and height */
+     
+    .slide {
+        float: left;
+        height: 100vw;
+        width: 100vh;
+       color: white;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+    }
+     
+    /* Add animation to the slides */
+     
+    .slide-wrapper {
+         
+        /* Calculate the total width on the
+      basis of number of slides */
+        width: calc(728px * 4);
+         
+        /* Specify the animation with the
+      duration and speed */
+        animation: slide 10s ease infinite;
+    }
+     
+    /* Set the background color
+    of each of the slides */
+     
+    .slide:nth-child(1) {
+        
+        background-image: url("b1.jpg");
+        background-blend-mode: darken;
+        background-color: rgba(0, 0, 0, 0.517);
+        
+    }
+     
+    .slide:nth-child(2) {
+        background-image: url("i2.jpeg");
+        background-blend-mode: darken;
+        background-color: rgba(0, 0, 0, 0.517);
+    }
+     
+    .slide:nth-child(3) {
+        background-image: url("i1.jpeg");
+        background-blend-mode: darken;
+        background-color: rgba(0, 0, 0, 0.517);
+    }
+     
+   
+     
+    /* Define the animation 
+    for the slideshow */
+     
+    @keyframes slide {
+         
+        /* Calculate the margin-left for 
+      each of the slides */
+        20% {
+            margin-left: 0px;
+        }
+        40% {
+            margin-left: calc(-728px * 1);
+        }
+        60% {
+            margin-left: calc(-728px * 2);
+        }
+     /*   80% {
+            margin-left: calc(-728px * 3);
+        }*/
+    }
+.card{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+    
+
+}
+@media only screen and (max-width: 700px) {
+    .card{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}
+.hh{
+    width: 90vw;
+}
+.footer{
+    background-color: gray;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+<body>
+    <div class="nav">
+        <a href="#home">home</a>
+        <a href="bookcat.html">Book Categories</a>
+        <a href="cart.html">Cart</a>
+        <a href="contact.html">Contact Us</a>
+</div>
+
+<div id="slideshow">
+    <div class="slide-wrapper">
+         
+        <!-- Define each of the slides
+     and write the content -->
+        <div class="slide">
+            <h1 class="slide-number">
+                "Online Library Management System".
+                
+            </h1> 
+        </div>
+        <div class="slide">
+            <h1 class="slide-number">
+                "Online Library Management System".
+            </h1> 
+        </div>
+        <div class="slide">
+            <h1 class="slide-number">
+                "Online Library Management System".
+            </h1> 
+        </div>
+        <div class="slide">
+            <h1 class="slide-number">
+                "Online Library Management System".
+            </h1> 
+        </div>
+    </div>
+</div>
+<div class="bi">
+    <h2>BOOKS</h2>
+</div>
+   <div class="hh">
+    <div class="card">
+    
+    </div>
+   </div>
+
+    <footer class="footer" style="">
+        <p>@copy right osama ahmad </p>
+    </footer>
+    
+  
+</body>
+<script>
+	let http = new XMLHttpRequest();
+http.open('get', 'books.json', true);
+http.send();
+http.onload = function(){
+   if(this.readyState == 4 && this.status == 200){
+      let books = JSON.parse(this.responseText);
+      let output = "";
+      for(let item of books){
+         output += `
+            <div class="books" style="margin-top: 1%; margin-left:1%; border: 1px solid black;display: flex; flex-direction: column; align-items: center; justify-content: center;">
+               <img src="${item.cover_image}" alt="${item.description}">
+               <p class="title">${item.title}</p>
+               
+               <p class"author">${item.author}</p>
+               <p class="description">${item.description}</p>
+               <p class="price">
+                  <span>${item.price}</span>
+                  <span>€</span>
+               </p>
+
+               <button type="button" style="background-color: black; color: white;" >add to cart</button>
+               <button type="button" style="background-color: black; color: white;" >view cart</button>
+            </div>
+         `;
+      }
+      document.querySelector(".card").innerHTML = output;
+   }
+}
+</script>
+</html>

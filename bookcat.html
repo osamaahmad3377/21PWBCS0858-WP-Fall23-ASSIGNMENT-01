@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+     .nav{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        background-color: black;
+    }
+    .nav a{
+        color: white;
+    }
+    .footer{
+    background-color: gray;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    
+    
+
+}
+@media only screen and (max-width: 700px) {
+    .card{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+<body>
+    <div class="nav">
+        <a href="index.html">home</a>
+        <a href="bookcat.html">Book Categories</a>
+        <a href="cart.html">Cart</a>
+        <a href="contact.html">Contact Us</a>
+</div>
+<div style="margin-top: 10%;">
+    <label for="s">search</label>
+<input type="search" id="s" placeholder="search">
+</div>
+
+<div class="card" style="margin-top: 10%;">
+    
+</div>
+
+
+<footer class="footer">
+    <p>@copy right osama ahmad </p>
+</footer>
+</body>
+<script>
+    let http = new XMLHttpRequest();
+http.open('get', 'books.json', true);
+http.send();
+http.onload = function(){
+   if(this.readyState == 4 && this.status == 200){
+      let books = JSON.parse(this.responseText);
+      let output = "";
+      for(let item of books){
+         output += `
+            <div class="books" style="margin-top: 1%; margin-left:1%; border: 1px solid black;display: flex; flex-direction: column; align-items: center; justify-content: center;">
+               <img src="${item.cover_image}" alt="${item.description}">
+               <p class="title">${item.title}</p>
+               
+               <p class"author">${item.author}</p>
+               <p class="description">${item.description}</p>
+               <p class="price">
+                  <span>${item.price}</span>
+                  <span>€</span>
+               </p>
+               <button type="button" style="background-color: black; color: white;" >add to cart</button>
+               <button type="button" style="background-color: black; color: white;" >view cart</button>
+          
+            </div>
+         `;
+      }
+      document.querySelector(".card").innerHTML = output;
+   }
+}
+</script>
+</html>
